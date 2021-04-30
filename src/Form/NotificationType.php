@@ -13,14 +13,15 @@ class NotificationType extends AbstractType
     {
         $builder
             ->add('title')
-            ->add('activation_date')
-        ;
+            ->add('activation_date');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Notification::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Notification::class,
+            ]
+        );
     }
 }

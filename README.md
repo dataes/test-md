@@ -33,12 +33,15 @@ Nous attacherons également de l'importance à la manière dont vous effectuerez
 Conseil: ne vous lancez pas tête baissée dans la solution qui vous semble la plus rapide. Ce test a bien évidemment été mis en place pour vous faire mettre en application des fonctionnalités bien précises de Symfony adaptées à ce genre de situation.
 
 -----------------------------------------------------------------------
-Start steps ; 
+Start steps :
 - Clone the project on your local machine
 - cd /test-md -> `symfony server:start`
 - Change .env DATABASE_URL for one of your local
 - `php bin/console doctrine:migrations:migrate`
 - run `npm install` and `npm run dev` and `npm run watch`
+
+Schema :
+![alt text](./schema.png)
 
 tests :
 `php ./vendor/bin/phpunit`
