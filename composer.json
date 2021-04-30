@@ -96,5 +96,7 @@
             "allow-contrib": false,
             "require": "5.2.*"
         }
-    }
+    },
+    "name": "vendor/test-md",
+    "description": "symfony test"
 }

@@ -31,3 +31,13 @@ A titre informatif, la version du formulaire en production comporte en réalité
 Nous attacherons également de l'importance à la manière dont vous effectuerez le rendu.
 
 Conseil: ne vous lancez pas tête baissée dans la solution qui vous semble la plus rapide. Ce test a bien évidemment été mis en place pour vous faire mettre en application des fonctionnalités bien précises de Symfony adaptées à ce genre de situation.
+
+-----------------------------------------------------------------------
+Start steps ; 
+- Clone the project on your local machine
+- cd /test-md -> `symfony server:start`
+- Change .env DATABASE_URL for one of your local
+- `php bin/console doctrine:migrations:migrate`
+
+tests :
+`php ./vendor/bin/phpunit`
