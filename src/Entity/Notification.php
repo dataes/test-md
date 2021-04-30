@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\NotificationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\DateImmutableType;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,10 +23,10 @@ class Notification
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $titre;
+    private $title;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="date_immutable", nullable=true)
      */
     private $activation_date;
 
@@ -53,35 +54,35 @@ class Notification
     /**
      * @return string|null
      */
-    public function getTitre(): ?string
+    public function getTitle(): ?string
     {
-        return $this->titre;
+        return $this->title;
     }
 
     /**
-     * @param string $titre
+     * @param string $title
      * @return $this
      */
-    public function setTitre(string $titre): self
+    public function setTitle(string $title): self
     {
-        $this->titre = $titre;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * @return bool|null
+     * @return DateImmutableType|null
      */
-    public function getActivationDate(): ?bool
+    public function getActivationDate(): ?DateImmutableType
     {
         return $this->activation_date;
     }
 
     /**
-     * @param bool|null $activation_date
+     * @param DateImmutableType|null $activation_date
      * @return $this
      */
-    public function setActivationDate(?bool $activation_date): self
+    public function setActivationDate(?DateImmutableType $activation_date): self
     {
         $this->activation_date = $activation_date;
 

@@ -38,6 +38,7 @@ Start steps ;
 - cd /test-md -> `symfony server:start`
 - Change .env DATABASE_URL for one of your local
 - `php bin/console doctrine:migrations:migrate`
+- run `npm install` and `npm run dev` and `npm run watch`
 
 tests :
 `php ./vendor/bin/phpunit`
