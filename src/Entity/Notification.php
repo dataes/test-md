@@ -5,7 +5,7 @@ namespace App\Entity;
 use App\Repository\NotificationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\DateImmutableType;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -71,18 +71,18 @@ class Notification
     }
 
     /**
-     * @return DateImmutableType|null
+     * @return DateTimeImmutable|null
      */
-    public function getActivationDate(): ?DateImmutableType
+    public function getActivationDate(): ?DateTimeImmutable
     {
         return $this->activation_date;
     }
 
     /**
-     * @param DateImmutableType|null $activation_date
+     * @param DateTimeImmutable|null $activation_date
      * @return $this
      */
-    public function setActivationDate(?DateImmutableType $activation_date): self
+    public function setActivationDate(?DateTimeImmutable $activation_date): self
     {
         $this->activation_date = $activation_date;
 

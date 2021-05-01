@@ -111,6 +111,17 @@ class NotificationBlockContent
         return $this;
     }
 
+    public function addLanguages(Array $languages): self
+    {
+        foreach ($languages as $language) {
+            if (!$this->languages->contains($language)) {
+                $this->languages[] = $language;
+                $language->addLanguageId($this);
+            }
+        }
+        return $this;
+    }
+
     /**
      * @param Language $language
      * @return $this

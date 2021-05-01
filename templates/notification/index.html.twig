@@ -1,14 +1,60 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello NotificationController!{% endblock %}
+{% block title %}Notification{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-<div class="example-wrapper">
-    {{ form(form) }}
-</div>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        {{ form_start(form) }}
+
+        {{ form_row(form.title|e) }}
+        {{ form_row(form.activation_date) }}
+        <label for="block">Bloc(s)</label>
+        <ul class="blocks" id="blocks"
+            data-prototype="{{ form_widget(form.notificationBlocks.vars.prototype)|e('html_attr') }}"
+        >
+            {% for notificationBlock in form.notificationBlocks %}
+                <li>
+                    {{ form_row(notificationBlock.user_validation) }}
+
+{#                    <label for="contents">Contenu(s)</label>#}
+                    <ul class="contents" id="contents"
+{#                        data-prototype="{{ form_widget(notificationBlock.notificationBlockContents.vars.prototype)|e('html_attr') }}"#}
+                    >
+                        {% for notificationBlockContent in  notificationBlock.notificationBlockContents %}
+                            {# {% for language in  notificationBlockContent.languages %} #}
+                            {# {{ form_row(language.iso_code) }} #}
+                            <li>
+                                {{ form_row(notificationBlockContent|e) }}
+                            </li>
+                            {# {% endfor %} #}
+
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="button" class="btn btn-info add_item_link mb-5"
+{#                data-collection-holder-class=["blocks","contents"]#}
+                data-collection-holder-class="blocks"
+        >
+            Ajouter un bloc
+        </button>
+
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}

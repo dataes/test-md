@@ -20,6 +20,48 @@ require('bootstrap');
 // require('bootstrap/js/dist/tooltip');
 // require('bootstrap/js/dist/popover');
 
-// $(document).ready(function() {
-//     $('[data-toggle="popover"]').popover();
-// });
+$(document).ready(function () {
+    // count the current form inputs
+    var $blocksCollectionHolder = $('ul.blocks');
+    // var $blockContentsCollectionHolder = $('ul.contents');
+    // set index
+    $blocksCollectionHolder.data('index', $blocksCollectionHolder.find('input').length);
+    // $blockContentsCollectionHolder.data('index', $blockContentsCollectionHolder.find('textarea').length);
+
+    $('body').on('click', '.add_item_link', function (e) {
+        e.preventDefault();
+        var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
+        // for (let i = 0; i < $collectionHolderClass.length; ++i) {
+            // data-collection-holder-class=["blocks","contents"]
+            // addFormsToCollection($collectionHolderClass[i]);
+            addFormsToCollection($collectionHolderClass);
+        // }
+    })
+
+    function addFormsToCollection($collectionHolderClass) {
+        // Get the ul that holds the collection of tags
+        var $collectionHolder = $('.' + $collectionHolderClass+':last');
+        // Get the data-prototype
+        var prototype = $collectionHolder.data('prototype');
+        // get the new index
+        var index = $collectionHolder.data('index');
+
+        var newForm = prototype;
+        // Replace '__name__' in the prototype's HTML to instead be a number based on how many items we have
+        newForm = newForm.replace(/__name__/g, index);
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+
+        var $newFormLi;
+        switch ($collectionHolderClass) {
+            case 'blocks':
+                $newFormLi = $('<li></li>').append(newForm);
+                break;
+            case 'contents':
+                // $newFormLi = $('li:last').append('<ul><li>'+newForm+'</li></ul>');
+                break;
+        }
+        // Add the new form at the end of the list
+        $collectionHolder.append($newFormLi)
+    }
+});
