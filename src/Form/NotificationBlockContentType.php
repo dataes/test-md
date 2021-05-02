@@ -20,7 +20,7 @@ class NotificationBlockContentType extends AbstractType
                 'constraints' => [
                     new Required(),
                     new NotBlank()
-                ]
+                ],
             ]);
     }
 

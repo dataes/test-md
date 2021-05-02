@@ -3,6 +3,7 @@
 {% block title %}Notification{% endblock %}
 
 {% block body %}
+
     {% for label, messages in app.flashes %}
         {% for message in messages %}
             <div class="flash-{{ label }}" id='message'>
@@ -10,6 +11,7 @@
             </div>
         {% endfor %}
     {% endfor %}
+
     <div class="example-wrapper">
     <ul class="nav nav-tabs">
         <li class="nav-item">
@@ -35,8 +37,10 @@
                             <div class="row col-12">
                                 {{ form_row(notificationBlock.user_validation) }}
                             </div>
+
+                            {# todo Make it works #}
                             <label for="contents"
-                                    {# data-prototype="{{ form_widget(notificationBlock.notificationBlockContents.vars.prototype)|e('html_attr') }}" #}
+{#                                   data-prototype="{{ form_widget(notificationBlock.notificationBlockContents.vars.prototype)|e('html_attr') }}"#}
                             >Contenu(s)</label>
 
                             <ul class="nav nav-tabs">
@@ -59,14 +63,13 @@
                                 {% endfor %}
                                 <hr/>
                             </div>
+
                         </div>
                     </div>
                 {% endfor %}
 
                 <button type="button" class="btn btn-info add_item_link"
-                        {# data-collection-holder-class=["blocks","contents"] #}
-                        data-collection-holder-class="blocks"
-                >
+                        data-collection-holder-class="blocks">
                     Ajouter un bloc
                 </button>
             </div>

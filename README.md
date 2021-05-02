@@ -48,3 +48,11 @@ tests :
 - `php bin/console --env=test doctrine:database:create`
 - `php bin/console --env=test doctrine:schema:create`
 - `php ./vendor/bin/phpunit`
+
+
+TODO :
+- (!) Unable to display the third form type prototype (NotificationBlockContent) when adding a block (!)
+- Active last language tab in form when notEmpty error message returned
+- Add fixtures, integration tests and end-to-end tests
+- Add page GET/{id} to get notification (update, delete)
+- upgrade design
