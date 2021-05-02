@@ -10,6 +10,7 @@ use App\Entity\NotificationBlockContent;
 use App\Repository\LanguageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectRepository;
+use \Symfony\Component\HttpFoundation\Response;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -82,11 +83,13 @@ class NotificationControllerTest extends TestCase
 
     public function testIndex()
     {
-        $notification = new Notification();
         $language1 = new Language();
         $language1->setIsoCode('en');
+
         $language2 = new Language();
         $language2->setIsoCode('fr');
+
+        $languages = [$language1, $language2];
 
         $this->em
             ->expects($this->once())
@@ -99,22 +102,20 @@ class NotificationControllerTest extends TestCase
             ->method('findAll')
             ->willReturn([$language1, $language2]);
 
-        // content per languages
-        $notificationBlockContent1 = new NotificationBlockContent();
-        $notificationBlockContent2 = new NotificationBlockContent();
-        $notificationBlockContent1->addLanguage($language1);
-        $notificationBlockContent2->addLanguage($language2);
-
+        $notification = new Notification();
         $notificationBlock = new NotificationBlock();
-        $notificationBlock->addNotificationBlockContent($notificationBlockContent1);
-        $notificationBlock->addNotificationBlockContent($notificationBlockContent2);
-
-        $notification->addNotificationBlock($notificationBlock);
+        // content per languages
+        foreach ($languages as $language) {
+            // many to many relation however one language per content (it could have been a OneToMany)
+            $notificationBlockContent = new NotificationBlockContent();
+            $notificationBlockContent->addLanguage($language);
+            $notificationBlock->addNotificationBlockContent($notificationBlockContent);
+            $notification->addNotificationBlock($notificationBlock);
+        }
 
         $this->em
             ->expects($this->exactly(3))
             ->method('persist');
-
 
         $this->form
             ->expects($this->once())
@@ -126,18 +127,15 @@ class NotificationControllerTest extends TestCase
             ->method('isSubmitted')
             ->willReturn([false]);
 
-//        $this->container
-//            ->expects($this->once())
-//            ->method('get')
-//            ->with($this->equalTo('form.factory'))
-//            ->willReturn($this->formFactory);
+        $this->container
+            ->expects($this->any())
+            ->method('has')
+            ->willReturn(true);
 
         $this->container
             ->expects($this->exactly(2))
             ->method('get')
             ->willReturnOnConsecutiveCalls($this->formFactory, $this->twig);
-// todo : why it goes into ; if (!$this->container->has('twig'))
-
 
         $this->formFactory
             ->expects($this->once())
@@ -152,14 +150,8 @@ class NotificationControllerTest extends TestCase
             ->expects($this->never())
             ->method('getData');
 
-//        $this->container
-//            ->expects($this->once())
-//            ->method('get')
-//            ->with($this->equalTo('twig'))
-//            ->willReturn($this->twig);
-
         $result = $this->controller->index($this->request);
-//dump($result->getDate());die();
-//        $this->assertInstanceOf(TwigResponse::class, $result);
+
+        $this->assertInstanceOf(Response::class, $result);
     }
 }
