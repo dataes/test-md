@@ -31,7 +31,7 @@ class Notification
     private $activation_date;
 
     /**
-     * @ORM\OneToMany(targetEntity=NotificationBlock::class, mappedBy="notification", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=NotificationBlock::class, mappedBy="notification", orphanRemoval=true, cascade={"persist"})
      */
     private $notificationBlocks;
 

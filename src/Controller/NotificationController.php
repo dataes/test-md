@@ -19,22 +19,8 @@ class NotificationController extends AbstractController
      */
     public function index(Request $request): Response
     {
-        $notification = new Notification();
-        $notificationBlock = new NotificationBlock();
-        $notificationBlockContent = new NotificationBlockContent();
-
-        $languages = $this->getDoctrine()
-            ->getRepository(Language::class)
-            ->findAll();
-
-        $notificationBlockContent->addLanguages($languages);
-        $notificationBlock->addNotificationBlockContent($notificationBlockContent);
-        $notification->addNotificationBlock($notificationBlock);
-
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($notification);
-        $entityManager->persist($notificationBlock);
-        $entityManager->persist($notificationBlockContent);
+        [$notification, $notificationBlock, $languages, $notificationBlockContent, $entityManager] =
+            $this->createNotification();
 
         $form = $this->createForm(NotificationType::class, $notification);
 
@@ -52,8 +38,36 @@ class NotificationController extends AbstractController
 
         return $this->render(
             'notification/index.html.twig', [
-            'form' => $form->createView(),
-            'languages' => $languages
-        ]);
+                'form' => $form->createView(),
+                'languages' => $languages
+            ]
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function createNotification(): array
+    {
+        $notification = new Notification();
+        $notificationBlock = new NotificationBlock();
+        $languages = $this->getDoctrine()
+            ->getRepository(Language::class)
+            ->findAll();
+
+        foreach ($languages as $language) {
+            // many to many relation however one language per content (it could have been a OneToMany)
+            $notificationBlockContent = new NotificationBlockContent();
+            $notificationBlockContent->addLanguage($language);
+            $notificationBlock->addNotificationBlockContent($notificationBlockContent);
+            $notification->addNotificationBlock($notificationBlock);
+        }
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($notification);
+        $entityManager->persist($notificationBlock);
+        $entityManager->persist($notificationBlockContent);
+
+        return [$notification, $notificationBlock, $languages, $notificationBlockContent, $entityManager];
     }
 }

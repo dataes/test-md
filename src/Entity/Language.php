@@ -25,7 +25,7 @@ class Language
     private $iso_code;
 
     /**
-     * @ORM\ManyToMany(targetEntity=NotificationBlockContent::class, inversedBy="languages")
+     * @ORM\ManyToMany(targetEntity=NotificationBlockContent::class, inversedBy="languages", cascade={"persist"})
      */
     private $language_id;
 
@@ -95,9 +95,9 @@ class Language
 
         return $this;
     }
-//
-//    public function __toString()
-//    {
-//        return '';
-//    }
+
+    public function __toString()
+    {
+        return $this->getIsoCode();
+    }
 }

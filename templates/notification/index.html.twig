@@ -3,58 +3,71 @@
 {% block title %}Notification{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper {
-            margin: 1em auto;
-            max-width: 800px;
-            width: 95%;
-            font: 18px/1.5 sans-serif;
-        }
-
-        .example-wrapper code {
-            background: #F5F5F5;
-            padding: 2px 6px;
-        }
-    </style>
-
     <div class="example-wrapper">
-        {{ form_start(form) }}
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a href="#content" class="nav-link active" data-toggle="tab">Contenu</a>
+        </li>
+        <li class="nav-item">
+            <a href="#recipents" class="nav-link" data-toggle="tab">Destinataires</a>
+        </li>
+    </ul>
 
-        {{ form_row(form.title|e) }}
-        {{ form_row(form.activation_date) }}
-        <label for="block">Bloc(s)</label>
-        <ul class="blocks" id="blocks"
-            data-prototype="{{ form_widget(form.notificationBlocks.vars.prototype)|e('html_attr') }}"
-        >
-            {% for notificationBlock in form.notificationBlocks %}
-                <li>
-                    {{ form_row(notificationBlock.user_validation) }}
-
-{#                    <label for="contents">Contenu(s)</label>#}
-                    <ul class="contents" id="contents"
-{#                        data-prototype="{{ form_widget(notificationBlock.notificationBlockContents.vars.prototype)|e('html_attr') }}"#}
-                    >
-                        {% for notificationBlockContent in  notificationBlock.notificationBlockContents %}
-                            {# {% for language in  notificationBlockContent.languages %} #}
-                            {# {{ form_row(language.iso_code) }} #}
-                            <li>
-                                {{ form_row(notificationBlockContent|e) }}
-                            </li>
-                            {# {% endfor %} #}
-
-                        {% endfor %}
-                    </ul>
-                </li>
-            {% endfor %}
-        </ul>
-        <button type="button" class="btn btn-info add_item_link mb-5"
-{#                data-collection-holder-class=["blocks","contents"]#}
-                data-collection-holder-class="blocks"
-        >
-            Ajouter un bloc
-        </button>
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="content">
+            {{ form_start(form) }}
 
 
-        {{ form_end(form) }}
+            {{ form_row(form.title|e) }}
+            {{ form_row(form.activation_date) }}
+            <label for="block">Bloc(s)</label>
+            <ul class="blocks" id="blocks"
+                data-prototype="{{ form_widget(form.notificationBlocks.vars.prototype)|e('html_attr') }}"
+            >
+                {% for notificationBlock in form.notificationBlocks %}
+                    <li>
+
+                        {{ form_row(notificationBlock.user_validation) }}
+
+                        <label for="contents"
+                               data-prototype="{{ form_widget(notificationBlock.notificationBlockContents.vars.prototype)|e('html_attr') }}"
+                        >Contenu(s)</label>
+
+                        <ul class="nav nav-tabs">
+                            {% for language in languages %}
+                                {% set href = '#' ~ language %}
+                                <li class="nav-item">
+                                    <a href="{{ href }}" class="nav-link {% if loop.index == 1 %} active {% endif %}"
+                                       data-toggle="tab">{{ language|upper }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+
+                        <div class="tab-content contents" id="contents">
+                            {% for key, language in languages %}
+                                <div class="tab-pane fade show {% if key == 0 %} active {% endif %}"
+                                     id="{{ language }}">
+                                    {{ form_row(notificationBlock.notificationBlockContents[key].text|e) }}
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                    </li>
+                {% endfor %}
+            </ul>
+            <button type="button" class="btn btn-info add_item_link mb-5"
+                    {# data-collection-holder-class=["blocks","contents"] #}
+                    data-collection-holder-class="blocks"
+            >
+                Ajouter un bloc
+            </button>
+
+
+            {{ form_end(form) }}
+        </div>
+        <div class="tab-pane fade" id="recipents">
+            <p></p>
+        </div>
     </div>
+
 {% endblock %}

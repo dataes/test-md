@@ -22,7 +22,6 @@ class NotificationBlockContentType extends AbstractType
                     new NotBlank()
                 ]
             ]);
-//           $builder->add('languages');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

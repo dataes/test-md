@@ -21,6 +21,10 @@ require('bootstrap');
 // require('bootstrap/js/dist/popover');
 
 $(document).ready(function () {
+    // fix form control not focusable.
+    $('textarea').each(function() {
+        $(this).removeAttr('required');
+    });
     // count the current form inputs
     var $blocksCollectionHolder = $('ul.blocks');
     // var $blockContentsCollectionHolder = $('ul.contents');

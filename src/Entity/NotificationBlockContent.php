@@ -111,6 +111,10 @@ class NotificationBlockContent
         return $this;
     }
 
+    /**
+     * @param array $languages
+     * @return $this
+     */
     public function addLanguages(Array $languages): self
     {
         foreach ($languages as $language) {

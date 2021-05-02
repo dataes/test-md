@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\NotificationBlock;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -15,9 +15,14 @@ class NotificationBlockType extends AbstractType
     {
         $builder
             ->add(
-                'user_validation', CheckboxType::class, [
+                'user_validation', ChoiceType::class, [
                     'label' => 'Ce bloc doit-il être validé par l\'utilisateur ?',
-                    'required' => false,
+                    'choices'  => [
+                        'Oui' => true,
+                        'Non' => false
+                    ],
+                    'expanded' => true,
+                    'required' => true
                 ]
             )->add(
                 'notificationBlockContents', CollectionType::class, [
