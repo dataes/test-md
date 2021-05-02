@@ -34,6 +34,13 @@ class NotificationController extends AbstractController
 
             $entityManager->persist($notification);
             $entityManager->flush();
+
+            $this->addFlash(
+                'notice',
+                'Notification enregistré !'
+            );
+
+            return $this->redirectToRoute('notification');
         }
 
         return $this->render(
