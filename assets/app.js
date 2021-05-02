@@ -32,15 +32,15 @@ $(document).ready(function () {
         e.preventDefault();
         var $collectionHolderClass = $(e.currentTarget).data('collectionHolderClass');
         // for (let i = 0; i < $collectionHolderClass.length; ++i) {
-            // data-collection-holder-class=["blocks","contents"]
-            // addFormsToCollection($collectionHolderClass[i]);
-            addFormsToCollection($collectionHolderClass);
+        // data-collection-holder-class=["blocks","contents"]
+        // addFormsToCollection($collectionHolderClass[i]);
+        addFormsToCollection($collectionHolderClass);
         // }
     })
 
     function addFormsToCollection($collectionHolderClass) {
         // Get the ul that holds the collection of tags
-        var $collectionHolder = $('.' + $collectionHolderClass+':last');
+        var $collectionHolder = $('.' + $collectionHolderClass + ':last');
         // Get the data-prototype
         var prototype = $collectionHolder.data('prototype');
         // get the new index
@@ -55,7 +55,11 @@ $(document).ready(function () {
         var $newFormLi;
         switch ($collectionHolderClass) {
             case 'blocks':
-                $newFormLi = $('<div class="newContent"></div>').append(newForm);
+                var id = "newContent" + index;
+                $newFormLi = $('<div class="newContent" id=' + id + '></div>').append(newForm);
+                $newFormLi.each(function () {
+                    addDeleteLink($(this));
+                });
                 break;
             case 'contents':
                 // $newFormLi = $('li:last').append('<ul><li>'+newForm+'</li></ul>');
@@ -65,13 +69,21 @@ $(document).ready(function () {
         $collectionHolder.append($newFormLi)
     }
 
+    function addDeleteLink($block) {
+        var $removeFormButton = $('<button type="button" class="btn btn-danger">Supprimer ce bloc</button>');
+        $block.append($removeFormButton);
+        $removeFormButton.on('click', function (e) {
+            $block.remove();
+        });
+    }
+
     // fix form control not focusable.
-    $('textarea').each(function() {
+    $('textarea').each(function () {
         $(this).removeAttr('required');
     });
 
     // flash message
-    setTimeout(function() {
+    setTimeout(function () {
         $('#message').fadeOut('fast');
     }, 2000);
 });

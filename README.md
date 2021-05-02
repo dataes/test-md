@@ -44,4 +44,4 @@ Schema :
 ![alt text](./schema.png)
 
 tests :
-`php ./vendor/bin/phpunit`
+`php ./vendor/bin/phpunit tests`
