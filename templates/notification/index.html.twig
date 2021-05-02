@@ -23,57 +23,57 @@
     <div class="tab-content">
         <div class="tab-pane fade show active" id="content">
             {{ form_start(form) }}
-
-            {{ form_row(form.title|e) }}
-            {{ form_row(form.activation_date) }}
-            <label for="block">Bloc(s)</label>
-            <ul class="blocks" id="blocks"
-                data-prototype="{{ form_widget(form.notificationBlocks.vars.prototype)|e('html_attr') }}"
-            >
+            <div class="container">
+                {{ form_row(form.title|e) }}
+                {{ form_row(form.activation_date) }}
+                <label for="block">Bloc(s)</label>
                 {% for notificationBlock in form.notificationBlocks %}
-                    <li>
+                    <div class="blockContentContainer">
+                        <div class="blocks" id="blocks"
+                             data-prototype="{{ form_widget(form.notificationBlocks.vars.prototype)|e('html_attr') }}"
+                        >
+                            <div class="row col-12">
+                                {{ form_row(notificationBlock.user_validation) }}
+                            </div>
+                            <label for="contents"
+                                    {# data-prototype="{{ form_widget(notificationBlock.notificationBlockContents.vars.prototype)|e('html_attr') }}" #}
+                            >Contenu(s)</label>
 
-                        {{ form_row(notificationBlock.user_validation) }}
+                            <ul class="nav nav-tabs">
+                                {% for language in languages %}
+                                    {% set href = '#' ~ language %}
+                                    <li class="nav-item">
+                                        <a href="{{ href }}"
+                                           class="nav-link {% if loop.index == 1 %} active {% endif %}"
+                                           data-toggle="tab">{{ language|upper }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
 
-                        <label for="contents"
-                               data-prototype="{{ form_widget(notificationBlock.notificationBlockContents.vars.prototype)|e('html_attr') }}"
-                        >Contenu(s)</label>
-
-                        <ul class="nav nav-tabs">
-                            {% for language in languages %}
-                                {% set href = '#' ~ language %}
-                                <li class="nav-item">
-                                    <a href="{{ href }}" class="nav-link {% if loop.index == 1 %} active {% endif %}"
-                                       data-toggle="tab">{{ language|upper }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-
-                        <div class="tab-content contents" id="contents">
-                            {% for key, language in languages %}
-                                <div class="tab-pane fade show {% if key == 0 %} active {% endif %}"
-                                     id="{{ language }}">
-                                    {{ form_row(notificationBlock.notificationBlockContents[key].text|e) }}
-                                </div>
-                            {% endfor %}
+                            <div class="tab-content contents" id="contents">
+                                {% for key, language in languages %}
+                                    <div class="tab-pane fade show {% if key == 0 %}active{% endif %}"
+                                         id="{{ language }}">
+                                        {{ form_row(notificationBlock.notificationBlockContents[key].text|e) }}
+                                    </div>
+                                {% endfor %}
+                                <hr/>
+                            </div>
                         </div>
-
-                    </li>
+                    </div>
                 {% endfor %}
-            </ul>
-            <button type="button" class="btn btn-info add_item_link mb-5"
-                    {# data-collection-holder-class=["blocks","contents"] #}
-                    data-collection-holder-class="blocks"
-            >
-                Ajouter un bloc
-            </button>
 
-
-            {{ form_end(form) }}
+                <button type="button" class="btn btn-info add_item_link"
+                        {# data-collection-holder-class=["blocks","contents"] #}
+                        data-collection-holder-class="blocks"
+                >
+                    Ajouter un bloc
+                </button>
+            </div>
+            <div id="saveButtonContainer">
+                {{ form_end(form) }}
+            </div>
         </div>
-        <div class="tab-pane fade" id="recipents">
-            <p></p>
-        </div>
+        <div class="tab-pane fade" id="recipents"></div>
     </div>
-
 {% endblock %}

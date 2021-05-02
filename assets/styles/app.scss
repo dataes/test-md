@@ -1,16 +1,87 @@
+$background-global: lightgray;
+$background-container: #dbedff;
+$background-white: white;
+
 body {
-    background-color: lightgray;
+  background-color: $background-global;
 }
 
 @import "~bootstrap/scss/bootstrap";
+
 .example-wrapper {
-    margin: 1em auto;
-    max-width: 800px;
-    width: 95%;
-    font: 18px/1.5 sans-serif;
+  margin: 1em auto;
+  max-width: 800px;
+  width: 95%;
 }
 
-.example-wrapper code {
-    background: #F5F5F5;
-    padding: 2px 6px;
+li {
+  list-style-type: none;
+}
+
+label {
+  font-weight: bold;
+}
+
+body > div > div.example-wrapper > div {
+  background-color: $background-container;
+}
+
+.nav-tabs {
+  background-color: $background-white;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  background-color: $background-container;
+}
+
+.blocks {
+  background-color: $background-white;
+  padding: inherit;
+}
+
+.tab-content > .active {
+  background-color: $background-container;
+}
+
+.container {
+  padding: 10px;
+}
+
+.blockContentContainer {
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.contents > div {
+  padding: 1px;
+}
+
+.contents > div > div > label {
+  margin-left: 14px;
+}
+
+textarea.form-control {
+  margin: auto;
+  width: 95%;
+}
+
+.newContent {
+  margin-top: 30px;
+}
+
+#saveButtonContainer {
+  background-color: $background-white;
+  padding-top: 10px;
+}
+
+// hack to separate the blocks; do it properly
+hr {
+  display: block;
+  position: relative;
+  border-style: solid;
+  border-width: 7px;
+  border-color: #dbedff;
+  width: 105%;
+  right: 4%;
+  top: 27px;
 }

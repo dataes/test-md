@@ -22,7 +22,7 @@ require('bootstrap');
 
 $(document).ready(function () {
     // count the current form inputs
-    var $blocksCollectionHolder = $('ul.blocks');
+    var $blocksCollectionHolder = $('div.blocks');
     // var $blockContentsCollectionHolder = $('ul.contents');
     // set index
     $blocksCollectionHolder.data('index', $blocksCollectionHolder.find('input').length);
@@ -45,7 +45,7 @@ $(document).ready(function () {
         var prototype = $collectionHolder.data('prototype');
         // get the new index
         var index = $collectionHolder.data('index');
-
+        console.log(index);
         var newForm = prototype;
         // Replace '__name__' in the prototype's HTML to instead be a number based on how many items we have
         newForm = newForm.replace(/__name__/g, index);
@@ -55,7 +55,7 @@ $(document).ready(function () {
         var $newFormLi;
         switch ($collectionHolderClass) {
             case 'blocks':
-                $newFormLi = $('<li></li>').append(newForm);
+                $newFormLi = $('<div class="newContent"></div>').append(newForm);
                 break;
             case 'contents':
                 // $newFormLi = $('li:last').append('<ul><li>'+newForm+'</li></ul>');
