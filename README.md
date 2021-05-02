@@ -44,4 +44,7 @@ Schema :
 ![alt text](./schema.png)
 
 tests :
-`php ./vendor/bin/phpunit tests`
+- Change .env.test DATABASE_URL for one of your local
+- `php bin/console --env=test doctrine:database:create`
+- `php bin/console --env=test doctrine:schema:create`
+- `php ./vendor/bin/phpunit`
